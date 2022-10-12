@@ -1,4 +1,4 @@
-# This workflow will build manifest and deploy a Workato Recipe
+# This workflow will build manifest and deploy
 name: cicd Promotion
 on:
   push:
@@ -23,6 +23,7 @@ jobs:
       - run: echo  "$NUMBER"
       - run: echo  "$REPO" 
       - run: echo  "$OWNER"      
-      - run: echo  "$ISSUE_NUMBER"         
+      - run: echo  "$ISSUE_NUMBER"  
+      - run: echo  "sourabh"    
       
       
