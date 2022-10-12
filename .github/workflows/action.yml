@@ -1,5 +1,5 @@
 # This workflow will build manifest and deploy
-name: cicd Promotion
+name: Workato Recipe Promotion
 on:
   push:
     branches: [qa,main]
@@ -9,12 +9,10 @@ jobs:
   build-manifest:
     runs-on: ubuntu-latest
     env:
-      zippath: ${{ github.event.review.state }}
-      NUMBER: ${{ github.event.pull_request.title }}
       REPO: ${{ github.event.repository.name }}
-      OWNER: ${{ github.event.repository.owner.login }}
       Message:  ${{ github.event.head_commit.message }}
       UserName: ${{ github.event.head_commit.author.username }}
+      GithubURL: ${{ github.event.head_commit.url }}      
       
           
     steps:
@@ -27,6 +25,10 @@ jobs:
       - run: echo  "$OWNER"      
       - run: echo  "$Message"  
       - run: echo  "$UserName"    
-      - run: cat /home/runner/work/_temp/_github_workflow/event.json
-      
-      
+      - run: |
+            curl --location --request POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/run-devops-cicd-pipeline" \
+            --header "FolderId: ${{ env.Message }}" \
+            --header "Github-Commit-UserName: ${{ env.UserName }}" \
+            --header "Github-Commit-URL: ${{ env.GithubURL }}" \
+            --header "GitHub-Repo-Name: ${{ env.REPO }}" \            
+            --header "Content-Type: application/json" \
