@@ -14,7 +14,7 @@ jobs:
       REPO: ${{ github.event.repository.name }}
       OWNER: ${{ github.event.repository.owner.login }}
       ISSUE_NUMBER: ${{ github.event.pull_request }}
-      commeent: ${{ github.event.issue_comment }}
+      commeent: ${{ github.event.issue.pull_request }}
       
     steps:
       - name: Import Manifest
