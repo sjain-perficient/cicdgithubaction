@@ -1,0 +1,28 @@
+# This workflow will build manifest and deploy a Workato Recipe
+name: cicd Promotion
+on:
+  push:
+    branches: [qa,main]
+  pull_request:
+    branches: [ dev ]
+jobs:
+  build-manifest:
+    runs-on: ubuntu-latest
+    env:
+      zippath: ${{ github.event.review.state }}
+      NUMBER: ${{ github.event.pull_request.title }}
+      REPO: ${{ github.event.repository.name }}
+      OWNER: ${{ github.event.repository.owner.login }}
+      ISSUE_NUMBER: ${{ github.event.pull_request }}
+      
+    steps:
+      - name: Import Manifest
+        run: echo "$GITHUB_CONTEXT"
+      - run: echo "$zippath"
+      - run: echo "$GITHUB_ACTOR"
+      - run: echo  "$NUMBER"
+      - run: echo  "$REPO" 
+      - run: echo  "$OWNER"      
+      - run: echo  "$ISSUE_NUMBER"         
+      
+      
