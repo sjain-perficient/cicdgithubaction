@@ -1,4 +1,4 @@
-# This workflow will build manifest and deploy a Workato Recipe
+# This workflow will build manifest and deploy
 name: cicd Promotion
 on:
   push:
