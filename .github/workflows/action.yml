@@ -6,32 +6,25 @@ on:
   pull_request:
     branches: [ dev ]
 jobs:
-  build-manifest:
+  set-github-variables:
     runs-on: ubuntu-latest
     env:
       REPO: ${{ github.event.repository.name }}
       Message:  ${{ github.event.head_commit.message }}
       UserName: ${{ github.event.head_commit.author.username }}
-      GithubURL: ${{ github.event.head_commit.url }}      
+      GithubURL: ${{ github.event.head_commit.url }}
+    steps:
+      - name: Print Variables
+      - run: echo Repository Name is $REPO
+      - run: echo  Approval Comment $Message
+      - run: echo  Github Commit URL is $GithubURL
+      - run: echo  Pull Request Approved by $UserName      
       
-          
+  
+  call-workato-devops-recipe:
+    runs-on: ubuntu-latest
     steps:
       - name: Import Manifest
-        run: echo "$GITHUB_CONTEXT"
-      - run: echo "$GITHUB_EVENT"
-      - run: echo "$GITHUB_ACTOR"
-      - run: echo  "$GITHUB_EVENT_NAME"
-      - run: echo  "$REPO" 
-      - run: echo  "$OWNER"      
-      - run: echo  "$Message"  
-      - run: echo  "$UserName"    
       - run: |
-            curl --location --request POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/run-devops-cicd-pipeline" \
-            --header "FolderId: ${{ env.Message }}" \
-            --header "Github-Commit-UserName: ${{ env.UserName }}" \
-            --header "Github-Commit-URL: ${{ env.GithubURL }}" \
-            --header "GitHub-Repo-Name: ${{ env.REPO }}" \            
-            --header "Content-Type: application/json" \
-  
-      
-      
+            curl -X - POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/run-devops-cicd-pipeline" \
+            -H {'FolderId': ${{ env.Message }},'Github-Commit-UserName': "${{ env.UserName }}" ,'Github-Commit-URL': "${{ env.GithubURL }}",'GitHub-Repo-Name': "${{ env.REPO }}"} 
