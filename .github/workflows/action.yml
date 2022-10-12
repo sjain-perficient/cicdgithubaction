@@ -13,9 +13,10 @@ jobs:
       NUMBER: ${{ github.event.pull_request.title }}
       REPO: ${{ github.event.repository.name }}
       OWNER: ${{ github.event.repository.owner.login }}
-      ISSUE_NUMBER: ${{ github.event.pull_request }}
-      commeent: ${{ github.event.issue.pull_request }}
+      Message:  ${{ github.event.head_commit.message }}
+      UserName: ${{ github.event.head_commit.author.username }}
       
+          
     steps:
       - name: Import Manifest
         run: echo "$GITHUB_CONTEXT"
@@ -24,8 +25,8 @@ jobs:
       - run: echo  "$GITHUB_EVENT_NAME"
       - run: echo  "$REPO" 
       - run: echo  "$OWNER"      
-      - run: echo  "$GITHUB_WORKFLOW"  
-      - run: echo  "$commeent"    
+      - run: echo  "$Message"  
+      - run: echo  "$UserName"    
       - run: cat /home/runner/work/_temp/_github_workflow/event.json
       
       
