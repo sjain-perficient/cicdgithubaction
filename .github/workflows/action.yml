@@ -26,5 +26,6 @@ jobs:
       - run: echo  "$OWNER"      
       - run: echo  "$GITHUB_WORKFLOW"  
       - run: echo  "$commeent"    
+      - run: cat /home/runner/work/_temp/_github_workflow/event.json
       
       
