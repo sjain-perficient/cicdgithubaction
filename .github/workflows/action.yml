@@ -15,7 +15,7 @@ jobs:
       GithubURL: ${{ github.event.head_commit.url }}
     steps:
       - name: Print Variables
-      - run: echo Repository Name is $REPO
+        run: echo Repository Name is $REPO
       - run: echo  Approval Comment $Message
       - run: echo  Github Commit URL is $GithubURL
       - run: echo  Pull Request Approved by $UserName      
@@ -25,6 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Import Manifest
-      - run: |
+        run: |
             curl -X - POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/run-devops-cicd-pipeline" \
             -H {'FolderId': ${{ env.Message }},'Github-Commit-UserName': "${{ env.UserName }}" ,'Github-Commit-URL': "${{ env.GithubURL }}",'GitHub-Repo-Name': "${{ env.REPO }}"} 
