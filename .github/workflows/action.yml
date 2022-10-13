@@ -27,4 +27,4 @@ jobs:
     steps:
       - name: Import Manifest
         run: |
-            curl --request POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/run-devops-cicd-pipeline"	 -H "Content-type:application/json" -H '{"FolderId":${{ needs.Message }}, "Github-Commit-UserName":"${{ needs.UserName }}", "Github-Commit-URL":${{ needs.GithubURL }}, "GitHub-Repo-Name":${{ needs.REPO }}}' 	 
+            curl --request POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/run-devops-cicd-pipeline"	 -H "Content-type:application/json" -H '{"FolderId":$Message, "Github-Commit-UserName":"$UserName", "Github-Commit-URL":$GithubURL, "GitHub-Repo-Name":$REPO}' 	 
