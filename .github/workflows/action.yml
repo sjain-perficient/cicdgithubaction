@@ -19,6 +19,9 @@ jobs:
       - run: echo  Approval Comment $Message
       - run: echo  Github Commit URL is $GithubURL
       - run: echo  Pull Request Approved by $UserName
+      - run: |
+             echo "The github context is:"
+             echo "${{ toJson(github) }}"      
       
   
   call-workato-devops-recipe:
