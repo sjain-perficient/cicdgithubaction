@@ -19,9 +19,7 @@ jobs:
       - run: echo  Approval Comment $Message
       - run: echo  Github Commit URL is $GithubURL
       - run: echo  Pull Request Approved by $UserName
-      - run: |
-             echo "The github context is:"
-             echo "${{ toJson(github) }}"      
+    
       
   
   call-workato-devops-recipe:
@@ -36,9 +34,9 @@ jobs:
       - name: Import Manifest
         run: |
             CODE=`curl --request POST "https://www.workato.com/webhooks/rest/000bb560-7fea-4d01-97e8-396890b80833/recipeops-cicd" -H "Content-type:application/json"  -d '{"FolderId":${{ env.Message }}, "Github-Commit-UserName":"${{ env.UserName }}", "Github-Commit-URL": "${{ env.GithubURL }}", "GitHub-Repo-Name":"${{ env.REPO }}"}'`
-            if [ $CODE!=200 ] 
+            if [ $CODE!= '{ "status": "ok" }' ] 
             then
-            echo "FAILURE" $CODE
+            echo "FAILURE"
             else
-            echo "SUCCESS" $CODE
+            echo "SUCCESS"
             fi            
